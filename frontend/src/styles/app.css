@@ -1,0 +1,273 @@
+/* ============================================================
+   Know Your Neighbourhood — "Warm Community" design system
+   Friendly + approachable: warm white, coral + sage palette,
+   one modern sans (Plus Jakarta Sans), soft rounded shapes,
+   gentle blurred shadows. No hard ink borders, no offset shadows.
+   ============================================================ */
+
+:root {
+  /* warm surfaces */
+  --paper:      #FBF7F2;  /* warm white app bg */
+  --paper-2:    #F3ECE3;  /* subtle hover / sunken */
+  --paper-card: #FFFFFF;  /* card surface */
+
+  /* text */
+  --ink:       #2D2A26;   /* soft charcoal (primary text) */
+  --ink-mut:   #6B6258;   /* muted text / captions */
+  --ink-line:  #2D2A2614; /* hairline borders (alpha) */
+
+  /* brand */
+  --coral:     #E8745B;   /* primary */
+  --coral-d:   #D85E45;   /* primary hover/pressed */
+  --sage:      #6B9B7C;   /* secondary / accent */
+  --sage-d:    #578068;
+  --sun:       #F2C14E;   /* warm highlight */
+
+  /* type — single friendly modern family */
+  --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* soft, rounded shape language */
+  --radius:    16px;      /* cards, panels, map */
+  --radius-sm: 10px;      /* buttons, inputs, tags */
+  --edge:      1px solid var(--ink-line);
+  --shadow:    0 8px 24px rgba(45, 42, 38, 0.08), 0 2px 6px rgba(45, 42, 38, 0.05);
+  --shadow-sm: 0 2px 8px rgba(45, 42, 38, 0.07);
+  --shadow-coral: 0 6px 18px rgba(232, 116, 91, 0.28);
+}
+
+/* warm flat background with a barely-there soft wash in the corners */
+html,
+body,
+.v-application {
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.v-application__wrap {
+  background-image:
+    radial-gradient(60rem 40rem at 100% -10%, rgba(232, 116, 91, 0.06), transparent 60%),
+    radial-gradient(50rem 36rem at -10% 110%, rgba(107, 155, 124, 0.07), transparent 60%);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+/* ---------- typography ---------- */
+h1, h2, h3, .kyn-display {
+  font-family: var(--sans);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.kyn-kicker {
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--coral);
+}
+
+.text-ink   { color: var(--ink) !important; }
+.text-mut   { color: var(--ink-mut) !important; }
+.text-coral { color: var(--coral) !important; }
+.text-sage  { color: var(--sage) !important; }
+
+/* ---------- shared primitives ---------- */
+.kyn-rule {
+  border: none;
+  border-top: 1px solid var(--ink-line);
+  margin: 0;
+}
+
+/* shared page header used across views */
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+.page-title {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin: 0.3rem 0 0.2rem;
+}
+.page-sub {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  color: var(--ink-mut);
+  line-height: 1.5;
+  max-width: 52ch;
+}
+
+.kyn-tag {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  color: var(--sage-d);
+}
+
+/* ---------- Vuetify overrides ---------- */
+
+/* App bar = soft warm strip */
+.v-app-bar.v-toolbar {
+  background: rgba(251, 247, 242, 0.85) !important;
+  backdrop-filter: blur(8px);
+  color: var(--ink) !important;
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.v-btn {
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: var(--radius-sm);
+}
+
+/* solid buttons get a soft lift */
+.v-btn--variant-flat,
+.v-btn--variant-elevated,
+.v-btn--variant-tonal {
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.v-btn--variant-flat.bg-primary,
+.v-btn--variant-flat.text-primary,
+.v-btn--variant-flat[color='primary'] {
+  box-shadow: var(--shadow-coral);
+}
+.v-btn--variant-flat:hover,
+.v-btn--variant-elevated:hover,
+.v-btn--variant-tonal:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+.v-btn--variant-flat:active,
+.v-btn--variant-tonal:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+.v-btn--variant-text:hover { transform: none; }
+
+/* cards = soft white panels */
+.v-card {
+  background: var(--paper-card) !important;
+  color: var(--ink) !important;
+  border: var(--edge);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow) !important;
+}
+.v-card-title {
+  font-family: var(--sans);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* inputs */
+.v-field {
+  border-radius: var(--radius-sm) !important;
+  font-family: var(--sans);
+}
+.v-field--variant-outlined .v-field__outline__start,
+.v-field--variant-outlined .v-field__outline__end,
+.v-field--variant-outlined .v-field__outline__notch::before,
+.v-field--variant-outlined .v-field__outline__notch::after {
+  border-color: var(--ink) !important;
+  opacity: 0.18;
+}
+.v-field--focused.v-field--variant-outlined .v-field__outline__start,
+.v-field--focused.v-field--variant-outlined .v-field__outline__end,
+.v-field--focused.v-field--variant-outlined .v-field__outline__notch::before,
+.v-field--focused.v-field--variant-outlined .v-field__outline__notch::after {
+  border-color: var(--coral) !important;
+  opacity: 1;
+}
+/* 2px focus ring set per-side (top right bottom left): the shorthand `2px`
+   would give every segment left/right borders, drawing stray vertical coral
+   lines inside the field over the input text. Each segment owns only its
+   perimeter sides. */
+.v-field--focused.v-field--variant-outlined .v-field__outline__start {
+  border-width: 2px 0 2px 2px;
+}
+.v-field--focused.v-field--variant-outlined .v-field__outline__end {
+  border-width: 2px 2px 2px 0;
+}
+.v-field--focused.v-field--variant-outlined .v-field__outline__notch::before {
+  border-width: 2px 0 0 0;
+}
+.v-field--focused.v-field--variant-outlined .v-field__outline__notch::after {
+  border-width: 0 0 2px 0;
+}
+
+/* data table = clean rounded card, soft header */
+.v-data-table {
+  background: var(--paper-card) !important;
+  border: var(--edge);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow) !important;
+  overflow: hidden;
+}
+.v-data-table th {
+  font-family: var(--sans) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  background: var(--paper-2) !important;
+  color: var(--ink-mut) !important;
+}
+.v-data-table td {
+  font-family: var(--sans);
+  border-bottom: 1px solid var(--ink-line) !important;
+}
+.v-data-table tr:hover td {
+  background: var(--paper-2) !important;
+}
+
+/* alerts + snackbars */
+.v-alert {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+/* dialogs */
+.v-overlay__content > .v-card {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow) !important;
+}
+
+/* Leaflet: clean rounded map plate, natural tiles */
+.leaflet-container {
+  border: var(--edge);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow) !important;
+  background: var(--paper-2) !important;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--sans);
+}
+.leaflet-popup-content strong { font-family: var(--sans); font-weight: 700; }
+
+/* links */
+a { color: var(--sage-d); text-underline-offset: 3px; }
+a:hover { color: var(--coral-d); }
+
+/* selection */
+::selection { background: var(--coral); color: #fff; }
