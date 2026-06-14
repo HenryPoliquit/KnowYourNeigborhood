@@ -1,39 +1,97 @@
-
 # Know Your Neighborhood
 
-The front-end of the “Know your neighborhood” web application will be developed using React JavaScript, an open-source JavaScript library. React JS allows us to create websites with the use of components allowing the developers to create dynamic and responsive web pages that are able to interact with the different APISs used for the application. Axios will also be used together with React JS to use the Rest API that we created using Spring Boot.
+A community-driven web app to discover, add, and map local stores in your
+neighborhood. Browse stores, register an account to contribute, pin each store
+on a map, and get in touch via the contact form.
 
-The users will be able to login the “Know your neighborhood” web application using the custom login created using the Rest API in Spring Boot, or with the use of existing APIs such as Google, and Facebook login APIs. Application of web hooks is also applied so that users are able to message the developers of the website on the contact us page.
+Originally a Spring Boot + JSP + MySQL project, rebuilt on a JavaScript stack.
 
+## Tech stack
 
+| Layer    | Technology |
+|----------|-----------|
+| Frontend | Vite + Vue 3 + Vuetify, Pinia, Vue Router, axios |
+| Maps     | Leaflet + OpenStreetMap (geocoding via Nominatim) |
+| Backend  | Fastify (Node.js), raw SQL via `@fastify/postgres` |
+| Auth     | Email/password with JWT (`@fastify/jwt`), bcrypt-hashed passwords |
+| Database | PostgreSQL |
+
+## Project layout
+
+```
+backend/    Fastify API (auth, stores, messages)
+frontend/   Vite + Vue + Vuetify SPA
+```
+
+## Prerequisites
+
+- Node.js 20+
+- PostgreSQL 14+
+
+## Setup
+
+### 1. Database
+
+Create the database (adjust user/host as needed):
+
+```bash
+psql -U postgres -c "CREATE DATABASE kyn;"
+```
+
+### 2. Backend
+
+```bash
+cd backend
+cp .env.example .env        # then edit DATABASE_URL and JWT_SECRET
+npm install
+npm run db:init             # creates tables; add --seed for sample data
+npm run dev                 # http://localhost:3000
+```
+
+`.env` keys:
+
+- `DATABASE_URL` — e.g. `postgres://postgres:yourpass@localhost:5432/kyn`
+- `JWT_SECRET` — long random string
+- `PORT` — default `3000`
+- `CORS_ORIGIN` — Vite dev origin, default `http://localhost:5173`
+
+### 3. Frontend
+
+```bash
+cd frontend
+cp .env.example .env        # VITE_API_URL points at the backend
+npm install
+npm run dev                 # http://localhost:5173
+```
+
+## API
+
+| Method | Path                  | Auth | Description            |
+|--------|-----------------------|------|------------------------|
+| POST   | `/api/auth/register`  | —    | Create account, returns JWT |
+| POST   | `/api/auth/login`     | —    | Login, returns JWT     |
+| GET    | `/api/auth/me`        | ✓    | Current user           |
+| GET    | `/api/stores`         | —    | List stores            |
+| GET    | `/api/stores/:id`     | —    | Get one store          |
+| POST   | `/api/stores`         | ✓    | Create store           |
+| PUT    | `/api/stores/:id`     | ✓    | Update store           |
+| DELETE | `/api/stores/:id`     | ✓    | Delete store           |
+| POST   | `/api/messages`       | —    | Submit contact message |
+| GET    | `/api/messages`       | ✓    | List messages          |
+
+Protected routes require an `Authorization: Bearer <token>` header. All SQL uses
+parameterized queries (`$1`, `$2`, …).
 
 ## Features
 
-- REST APIs
-- Responsive
-- Spring Security
-- Cross-platform
-- Frontend and Backend validation
+- Store CRUD with name, phone, locality, and geocoded coordinates
+- Email/password authentication; only logged-in users can add/edit/delete stores
+- Interactive Leaflet map: plot all located stores, or click/geocode to place a
+  store when adding/editing
+- Contact form persisted to the database
 
+## Notes
 
-## Authors
-The project is authored by me as a project during my first year.
-
-
-## Screenshots
-
-Home
-
-![Home](https://onedrive.live.com/embed?resid=D84592B03776F086%21164&authkey=%21ACdv-kGjrxEIciw&width=682&height=916)
-
-Login
-
-![Login](https://onedrive.live.com/embed?resid=D84592B03776F086%21163&authkey=%21AMepPhnxZApHihc&width=513&height=257)
-
-Registration
-
-![Registration](https://onedrive.live.com/embed?resid=D84592B03776F086%21165&authkey=%21AJSCoPMXGDyt47c&width=669&height=396)
-
-Dashboard
-
-![Dashboard](https://onedrive.live.com/embed?resid=D84592B03776F086%21162&authkey=%21APqrAdBbspoicY0&width=514&height=257)
+- OAuth (Google/Facebook) is out of scope in this build; the schema leaves room
+  to add it later.
+- Nominatim geocoding is rate-limited — keep usage low for development.
