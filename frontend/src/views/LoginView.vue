@@ -16,6 +16,13 @@ const showPassword = ref(false);
 const formRef = ref(null);
 const googleBtn = ref(null);
 
+// Only allow same-site path redirects (a single leading slash, no scheme,
+// no protocol-relative `//` or `/\`) to prevent open-redirect abuse.
+function redirectTarget() {
+  const r = route.query.redirect;
+  return typeof r === 'string' && /^\/(?![/\\])/.test(r) ? r : { name: 'stores' };
+}
+
 async function submit() {
   const { valid } = await formRef.value.validate();
   if (!valid) return;
@@ -23,7 +30,7 @@ async function submit() {
   loading.value = true;
   try {
     await auth.login(email.value, password.value);
-    router.push(route.query.redirect || { name: 'stores' });
+    router.push(redirectTarget());
   } catch (e) {
     error.value = e.response?.data?.error || 'Login failed';
   } finally {
@@ -36,7 +43,7 @@ async function handleGoogleResponse({ credential }) {
   loading.value = true;
   try {
     await auth.loginWithGoogle(credential);
-    router.push(route.query.redirect || { name: 'stores' });
+    router.push(redirectTarget());
   } catch (e) {
     error.value = e.response?.data?.error || 'Google sign-in failed';
   } finally {
