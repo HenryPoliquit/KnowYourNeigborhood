@@ -17,7 +17,7 @@ export default async function messagesRoutes(fastify) {
   }, async (request, reply) => {
     const { name, email, body } = request.body;
     const { rows } = await fastify.pg.query(
-      `INSERT INTO messages (name, email, body)
+      `INSERT INTO kyn.messages (name, email, body)
        VALUES ($1, $2, $3)
        RETURNING *`,
       [name ?? null, email ?? null, body]
@@ -27,7 +27,7 @@ export default async function messagesRoutes(fastify) {
 
   fastify.get('/', { preHandler: [fastify.authenticate] }, async () => {
     const { rows } = await fastify.pg.query(
-      'SELECT * FROM messages ORDER BY created_at DESC'
+      'SELECT * FROM kyn.messages ORDER BY created_at DESC'
     );
     return rows;
   });
