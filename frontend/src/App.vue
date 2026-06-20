@@ -27,11 +27,7 @@ function logout() {
       <div class="masthead">
         <div class="masthead__brand" @click="router.push('/')">
           <span class="masthead__mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
-              <path d="M12 21s7-5.686 7-11a7 7 0 1 0-14 0c0 5.314 7 11 7 11Z"
-                fill="currentColor" />
-              <circle cx="12" cy="10" r="2.6" fill="#fff" />
-            </svg>
+            <img src="/logo.svg" alt="" width="28" height="28" />
           </span>
           <span class="masthead__brandtext">
             <span class="masthead__title">Know Your Neighbourhood</span>
@@ -99,9 +95,8 @@ function logout() {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: var(--coral);
-  color: #fff;
-  box-shadow: var(--shadow-coral);
+  background: var(--paper-2);
+  box-shadow: var(--shadow-sm);
   flex: none;
 }
 .masthead__brandtext {

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- pin body -->
+  <path d="M32 4C20.954 4 12 12.954 12 24c0 14 20 36 20 36s20-22 20-36C52 12.954 43.046 4 32 4z" fill="#E8745B" rx="4"/>
+  <!-- inner white circle -->
+  <circle cx="32" cy="24" r="14" fill="#FBF7F2"/>
+  <!-- storefront roof -->
+  <path d="M22 24 L32 16 L42 24z" fill="#6B9B7C"/>
+  <!-- storefront base -->
+  <rect x="25" y="24" width="14" height="9" rx="1.5" fill="#6B9B7C"/>
+  <!-- door -->
+  <rect x="30" y="27" width="4" height="6" rx="1" fill="#FBF7F2"/>
+  <!-- window -->
+  <rect x="26.5" y="26" width="3" height="3" rx="0.75" fill="#FBF7F2"/>
+  <!-- awning stripe -->
+  <rect x="25" y="24" width="14" height="2" rx="0.5" fill="#578068"/>
+</svg>
